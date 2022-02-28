@@ -1,5 +1,4 @@
-﻿using AgendaContatos.Categorias;
-using AgendaContatos.Categorias.Models;
+﻿using AgendaContatos.Categorias.Models;
 using AgendaContatos.Core;
 using System;
 using System.Collections.Generic;
@@ -39,7 +38,7 @@ namespace AgendaContatos.Categorias
         private Categoria ObterSelecionado()
         {
             if (dataGridView1.SelectedRows.Count == 0)
-                return null;
+                return default;
 
             return dataGridView1.SelectedRows[0]?.DataBoundItem as Categoria;
         }

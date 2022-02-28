@@ -9,11 +9,10 @@ namespace AgendaContatos.Categorias.Models
 {
     public static class CategoriasDatabase 
     {
-        public const string SELECT_CATEGORIA = "Select Id, Descricao From Categorias";
-        public const string INSERT_CATEGORIA = "Insert into Categorias (Descricao) values (@Descricao); SELECT CAST(SCOPE_IDENTITY() as int);";
-        public const string UPDATE_CATEGORIA = "Update Categorias SET Descricao = @Descricao Where Id = @Id";
-        public const string DELETE_CATEGORIA = "Delete From Categorias Where Id = @Id";
-        public const string OBTER_IDENTITY = "SELECT @@IDENTITY";
+        private const string SELECT_CATEGORIA = "Select Id, Descricao From Categorias";
+        private const string INSERT_CATEGORIA = "Insert into Categorias (Descricao) values (@Descricao); SELECT CAST(SCOPE_IDENTITY() as int);";
+        private const string UPDATE_CATEGORIA = "Update Categorias SET Descricao = @Descricao Where Id = @Id";
+        private const string DELETE_CATEGORIA = "Delete From Categorias Where Id = @Id";
 
 
         public static List<Categoria> ObterLista()
