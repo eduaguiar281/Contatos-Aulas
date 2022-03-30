@@ -1,5 +1,7 @@
 ﻿using AgendaContatos.Categorias.Models;
 using AgendaContatos.Core;
+using AgendaContatos.Core.Infraestrutura;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -8,9 +10,12 @@ namespace AgendaContatos.Categorias
 {
     public partial class FrmCategoria : Form
     {
+        private readonly ICategoriasDatabase _categoriasDatabase;
+
         public FrmCategoria()
         {
             InitializeComponent();
+            _categoriasDatabase = Program.ServiceProvider.GetService<ICategoriasDatabase>();
         }
 
         private void FrmCategoria_FormClosed(object sender, FormClosedEventArgs e)
@@ -22,9 +27,9 @@ namespace AgendaContatos.Categorias
         {
             List<Categoria> categorias;
             if (textBox1.Text == string.Empty)
-                categorias = CategoriasDatabase.ObterLista();
+                categorias = _categoriasDatabase.ObterLista();
             else
-                categorias = CategoriasDatabase.ObterLista(textBox1.Text);
+                categorias = _categoriasDatabase.ObterLista(textBox1.Text);
             dataGridView1.DataSource = categorias;
         }
 

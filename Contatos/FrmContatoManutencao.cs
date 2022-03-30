@@ -1,6 +1,8 @@
 ﻿using AgendaContatos.Categorias.Models;
 using AgendaContatos.Contatos.Models;
 using AgendaContatos.Core;
+using AgendaContatos.Core.Infraestrutura;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows.Forms;
 
@@ -9,12 +11,15 @@ namespace AgendaContatos.Contatos
     public partial class FrmContatoManutencao : Form
     {
 
+        private readonly IContatosDatabase _contatosDatabase;
+
         public readonly OperacaoCadastro _operacaoCadastro;
         protected Contato Contato { get; set; }
 
         public FrmContatoManutencao(OperacaoCadastro operacaoCadastro, Contato contato)
         {
             InitializeComponent();
+            _contatosDatabase = Program.ServiceProvider.GetService<IContatosDatabase>();
             _operacaoCadastro = operacaoCadastro;
             Contato = contato;
             contatoBindingSource.DataSource = Contato;
@@ -23,7 +28,7 @@ namespace AgendaContatos.Contatos
 
         private void InicializarDados()
         {
-            categoriaBindingSource.DataSource = CategoriasDatabase.ObterLista();
+            categoriaBindingSource.DataSource = _contatosDatabase.ObterLista();
             switch (_operacaoCadastro)
             {
                 case OperacaoCadastro.Incluir:
@@ -66,13 +71,13 @@ namespace AgendaContatos.Contatos
             switch (_operacaoCadastro)
             {
                 case OperacaoCadastro.Incluir:
-                    await ContatosDatabase.InsertContato(Contato);
+                    await _contatosDatabase.InsertContato(Contato);
                     break;
                 case OperacaoCadastro.Alterar:
-                    await ContatosDatabase.UpdateContato(Contato);
+                    await _contatosDatabase.UpdateContato(Contato);
                     break;
                 case OperacaoCadastro.Excluir:
-                    await ContatosDatabase.DeleteContato(Contato.Id);
+                    await _contatosDatabase.DeleteContato(Contato.Id);
                     break;
             }
             Close();

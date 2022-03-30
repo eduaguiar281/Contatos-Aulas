@@ -1,13 +1,13 @@
-﻿using AgendaContatos.Core;
+﻿using AgendaContatos.Core.Infraestrutura;
 using Dapper;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace AgendaContatos.Contatos.Models
 {
-    public static class ContatosDatabase
+    public class ContatosDatabase : IContatosDatabase
     {
         private const string SELECT_CONTATO = @"Select c.Id, c.Celular, c.Telefone, c.Nome,
                                                       c.Endereco, c.NumeroCasa, c.Email, 
@@ -25,35 +25,41 @@ namespace AgendaContatos.Contatos.Models
                                                   Where Id = @Id";
         private const string DELETE_CONTATO = "Delete From Contatos Where Id = @Id";
 
-        public static List<Contato> ObterLista()
+        private readonly IConnectionFactory _connectionFactory;
+        public ContatosDatabase(IConnectionFactory connectionFactory)
         {
-            using SqlConnection connection = ConnectionFactory.ObterConexao();
+            _connectionFactory = connectionFactory;
+        }
+
+        public List<Contato> ObterLista()
+        {
+            using IDbConnection connection = _connectionFactory.ObterConexao();
             return connection.Query<Contato>(SELECT_CONTATO).ToList();
         }
-        public static List<Contato> ObterLista(string filtro)
+        public List<Contato> ObterLista(string filtro)
         {
             string sql = SELECT_CONTATO + @" Where c.Id = @id or c.Nome like @filtro or c.Celular like @filtro or c.Telefone like @filtro
                                                 or c.Endereco like @filtro or c.NumeroCasa like @filtro or c.Email like @filtro 
                                                 or cat.Descricao like @filtro";
             int.TryParse(filtro, out int id);
-            using SqlConnection connection = ConnectionFactory.ObterConexao();
+            using IDbConnection connection = _connectionFactory.ObterConexao();
             return connection.Query<Contato>(sql, new { id, filtro = $"%{filtro}%" }).ToList();
         }
 
-        public static async Task InsertContato(Contato contato)
+        public async Task InsertContato(Contato contato)
         {
-            using SqlConnection connection = ConnectionFactory.ObterConexao();
+            using IDbConnection connection = _connectionFactory.ObterConexao();
             int id = await connection.ExecuteScalarAsync<int>(INSERT_CONTATO, contato);
             contato.Id = id;
         }
-        public static async Task UpdateContato(Contato contato)
+        public async Task UpdateContato(Contato contato)
         {
-            using SqlConnection connection = ConnectionFactory.ObterConexao();
+            using IDbConnection connection = _connectionFactory.ObterConexao();
             await connection.ExecuteAsync(UPDATE_CONTATO, contato);
         }
-        public static async Task DeleteContato(int idContato)
+        public async Task DeleteContato(int idContato)
         {
-            using SqlConnection connection = ConnectionFactory.ObterConexao();
+            using IDbConnection connection = _connectionFactory.ObterConexao();
             await connection.ExecuteAsync(DELETE_CONTATO, new { Id = idContato });
         }
 

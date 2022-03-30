@@ -1,5 +1,7 @@
 ﻿using AgendaContatos.Contatos.Models;
 using AgendaContatos.Core;
+using AgendaContatos.Core.Infraestrutura;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -7,9 +9,12 @@ namespace AgendaContatos.Contatos
 {
     public partial class FrmContatos : Form
     {
+        private readonly IContatosDatabase _contatosDatabase;
+
         public FrmContatos()
         {
             InitializeComponent();
+            _contatosDatabase = Program.ServiceProvider.GetService<IContatosDatabase>();
         }
 
         private void FrmContatos_FormClosed(object sender, FormClosedEventArgs e)
@@ -30,9 +35,9 @@ namespace AgendaContatos.Contatos
         {
             List<Contato> contatos;
             if (txtFiltro.Text == string.Empty)
-                contatos = ContatosDatabase.ObterLista();
+                contatos = _contatosDatabase.ObterLista();
             else
-                contatos = ContatosDatabase.ObterLista(txtFiltro.Text);
+                contatos = _contatosDatabase.ObterLista(txtFiltro.Text);
             dgvContatos.DataSource = contatos;
         }
 
