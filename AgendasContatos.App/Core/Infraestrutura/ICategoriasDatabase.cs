@@ -1,4 +1,4 @@
-﻿using AgendaContatos.Categorias.Models;
+﻿using AgendaContatos.Infra.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

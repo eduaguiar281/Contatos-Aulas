@@ -1,6 +1,6 @@
-﻿using AgendaContatos.Contatos.Models;
-using AgendaContatos.Core;
+﻿using AgendaContatos.Core;
 using AgendaContatos.Core.Infraestrutura;
+using AgendaContatos.Infra.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Windows.Forms;

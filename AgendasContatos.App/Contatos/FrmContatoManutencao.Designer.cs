@@ -108,7 +108,7 @@
             // 
             // contatoBindingSource
             // 
-            this.contatoBindingSource.DataSource = typeof(AgendaContatos.Contatos.Models.Contato);
+            this.contatoBindingSource.DataSource = typeof(AgendaContatos.Infra.Models.Contato);
             // 
             // label2
             // 
@@ -248,7 +248,7 @@
             // 
             // categoriaBindingSource
             // 
-            this.categoriaBindingSource.DataSource = typeof(AgendaContatos.Categorias.Models.Categoria);
+            this.categoriaBindingSource.DataSource = typeof(AgendaContatos.Infra.Models.Categoria);
             // 
             // label8
             // 

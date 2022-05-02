@@ -103,7 +103,7 @@
             // 
             // categoriaBindingSource
             // 
-            this.categoriaBindingSource.DataSource = typeof(AgendaContatos.Categorias.Models.Categoria);
+            this.categoriaBindingSource.DataSource = typeof(AgendaContatos.Infra.Models.Categoria);
             // 
             // textBox2
             // 

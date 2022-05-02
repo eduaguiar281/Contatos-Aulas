@@ -1,8 +1,4 @@
-﻿using AgendaContatos.Categorias.Models;
-using System;
-using System.Collections.Generic;
-
-namespace AgendaContatos.Contatos.Models
+﻿namespace AgendaContatos.Infra.Models
 {
     public class Contato
     {
@@ -17,5 +13,6 @@ namespace AgendaContatos.Contatos.Models
         public bool Ativo { get; set; }
         public int? IdCategoria { get; set; }
         public string? DescricaoCategoria { get; set; }
+        public virtual Categoria? Categoria { get; set; }
     }
 }

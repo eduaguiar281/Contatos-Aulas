@@ -1,4 +1,5 @@
 ﻿using AgendaContatos.Core.Infraestrutura;
+using AgendaContatos.Infra.Models;
 using Dapper;
 using System.Collections.Generic;
 using System.Data;
