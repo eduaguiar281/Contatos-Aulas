@@ -1,6 +1,11 @@
 using AgendaContatos.Categorias.Models;
 using AgendaContatos.Contatos.Models;
 using AgendaContatos.Core.Infraestrutura;
+using AgendaContatos.Infra.Models;
+using AgendasContatos.Infra;
+using AgendasContatos.Infra.Repository;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -47,6 +52,12 @@ namespace AgendaContatos
             Services.AddScoped<ICategoriasDatabase, CategoriasDatabase>();
             Services.AddScoped<IContatosDatabase, ContatosDatabase>();
             Services.AddScoped<IConnectionFactory, ConnectionFactory>();
+
+            var optionsBuilder = new DbContextOptionsBuilder<ContatosDbContext>();
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("SqlServer"));
+            Services.AddSingleton(new ContatosDbContext(optionsBuilder.Options));
+
+            Services.AddScoped<IRepository<Categoria, int>, CategoriaRepository>();
             ServiceProvider = Services.BuildServiceProvider();
         }
     }

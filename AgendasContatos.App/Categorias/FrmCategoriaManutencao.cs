@@ -1,6 +1,7 @@
 ﻿using AgendaContatos.Core;
 using AgendaContatos.Core.Infraestrutura;
 using AgendaContatos.Infra.Models;
+using AgendasContatos.Infra.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Forms;
 
@@ -8,13 +9,13 @@ namespace AgendaContatos.Categorias
 {
     public partial class FrmCategoriaManutencao : Form
     {
-        private readonly ICategoriasDatabase _categoriasDatabase;
+        private readonly IRepository<Categoria, int> _categoriasRepository;
         public readonly OperacaoCadastro _operacaoCadastro;
         protected Categoria Categoria { get; set; }
         public FrmCategoriaManutencao(OperacaoCadastro operacaoCadastro, Categoria categoria)
         {
             InitializeComponent();
-            _categoriasDatabase = Program.ServiceProvider.GetService<ICategoriasDatabase>();
+            _categoriasRepository = Program.ServiceProvider.GetService<IRepository<Categoria, int>>();
             _operacaoCadastro = operacaoCadastro;
             Categoria = categoria;
             categoriaBindingSource.DataSource = Categoria;
@@ -58,13 +59,13 @@ namespace AgendaContatos.Categorias
             switch (_operacaoCadastro)
             {
                 case OperacaoCadastro.Incluir:
-                    await _categoriasDatabase.InsertCategoria(Categoria);
+                    await _categoriasRepository.InsertAsync(Categoria);
                     break;
                 case OperacaoCadastro.Alterar:
-                    await _categoriasDatabase.UpdateCategoria(Categoria);
+                    await _categoriasRepository.UpdateAsync(Categoria);
                     break;
                 case OperacaoCadastro.Excluir:
-                    await _categoriasDatabase.DeleteCategoria(Categoria.Id);
+                    await _categoriasRepository.DeleteAsync(Categoria);
                     break;
             }
             Close();

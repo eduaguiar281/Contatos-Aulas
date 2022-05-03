@@ -1,6 +1,7 @@
 ﻿using AgendaContatos.Core;
 using AgendaContatos.Core.Infraestrutura;
 using AgendaContatos.Infra.Models;
+using AgendasContatos.Infra.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,12 @@ namespace AgendaContatos.Categorias
 {
     public partial class FrmCategoria : Form
     {
-        private readonly ICategoriasDatabase _categoriasDatabase;
+        private readonly IRepository<Categoria, int> _categoriaRepository;
 
         public FrmCategoria()
         {
             InitializeComponent();
-            _categoriasDatabase = Program.ServiceProvider.GetService<ICategoriasDatabase>();
+            _categoriaRepository = Program.ServiceProvider.GetService<IRepository<Categoria, int>>();
         }
 
         private void FrmCategoria_FormClosed(object sender, FormClosedEventArgs e)
@@ -23,13 +24,13 @@ namespace AgendaContatos.Categorias
             this.Dispose();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-            List<Categoria> categorias;
+            IEnumerable<Categoria> categorias;
             if (textBox1.Text == string.Empty)
-                categorias = _categoriasDatabase.ObterLista();
+                categorias = await _categoriaRepository.ObterTodosAsync();
             else
-                categorias = _categoriasDatabase.ObterLista(textBox1.Text);
+                categorias = await _categoriaRepository.ObterAsync(textBox1.Text);
             dataGridView1.DataSource = categorias;
         }
 
