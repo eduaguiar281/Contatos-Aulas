@@ -6,6 +6,6 @@ namespace AgendaContatos.Infra.Models
     {
         public int Id { get; set; }
         public string Descricao { get; set; } = string.Empty;
-        public virtual ICollection<Contato> Contatos { get; set; } = new Collection<Contato>();
+        public ICollection<Contato> Contatos { get; set; } = new Collection<Contato>();
     }
 }

@@ -14,11 +14,11 @@ namespace AgendasContatos.Infra.EntityConfigurations
             .HasColumnName("Descricao") //Observação: Não é necessário estou apenas ilustrando que posso mapear o nome da coluna 
             .HasColumnType("varchar(50)")
             .IsRequired();
-
-            builder.HasMany(c => c.Contatos)
-               .WithOne()
-               .HasForeignKey("IdCategoria")
-               .OnDelete(DeleteBehavior.Cascade);
+            
+            builder
+                .HasMany(ct => ct.Contatos)
+                .WithOne(ca => ca.Categoria)
+                .HasForeignKey(ct => ct.IdCategoria);
         }
     }
 }
