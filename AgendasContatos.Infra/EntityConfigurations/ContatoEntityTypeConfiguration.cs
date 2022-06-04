@@ -12,33 +12,38 @@ namespace AgendasContatos.Infra.EntityConfigurations
             builder.HasKey(k => k.Id);
 
             builder.Property(p => p.Celular)
-            .HasColumnType("varchar(20)");
+                .IsUnicode(false)
+                .HasMaxLength(20);
 
             builder.Property(p => p.Telefone)
-            .HasColumnType("varchar(20)")
-            .IsRequired();
+                .IsUnicode(false)
+                .HasMaxLength(20)
+                .IsRequired();
             
             builder.Property(p => p.Nome)
-            .HasColumnType("varchar(50)")
-            .IsRequired();
+                .IsUnicode(false)
+                .HasMaxLength(50)
+                .IsRequired();
 
 
             builder.Property(p => p.Endereco)
-            .HasColumnType("varchar(50)")
-            .IsRequired();
+                .IsUnicode(false)
+                .HasMaxLength(50)
+                .IsRequired();
 
             builder.Property(p => p.NumeroCasa)
-            .HasColumnType("varchar(20)");
+                .IsUnicode(false)
+                .HasMaxLength(20);
 
             builder.Property(p => p.Email)
-            .HasColumnType("varchar(60)");
+                .IsUnicode(false)
+                .HasMaxLength(60);
 
             builder.Ignore(p => p.DescricaoCategoria);
             //Pode ser colocado o atributo [NotMapped] na classe
-            
 
-            builder.Property(p => p.DataCadastro)
-            .HasColumnType("datetime2"); //Não é necessário este mapeamento, está aqui apenas para informar isso
+
+            builder.Property(p => p.DataCadastro);
 
             /*Repare que os campos Ativo, IdCategoria eu não farei o mapeamento e o entity fará isso automático
              1 - O ativo vai ser mapeado como bit not null

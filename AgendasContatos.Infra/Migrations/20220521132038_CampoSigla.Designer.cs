@@ -4,6 +4,7 @@ using AgendasContatos.Infra;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendasContatos.Infra.Migrations
 {
     [DbContext(typeof(ContatosDbContext))]
-    partial class ContatosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220521132038_CampoSigla")]
+    partial class CampoSigla
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +52,7 @@ namespace AgendasContatos.Infra.Migrations
                         new
                         {
                             Id = 1,
-                            Descricao = "Família",
+                            Descricao = "Familia",
                             Sigla = "FAM"
                         },
                         new

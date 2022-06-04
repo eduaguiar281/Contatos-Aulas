@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendasContatos.Infra.Migrations
 {
     [DbContext(typeof(ContatosDbContext))]
-    [Migration("20220503121931_Initial-create-database")]
-    partial class Initialcreatedatabase
+    [Migration("20220521131245_Initial-database")]
+    partial class Initialdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,8 +34,9 @@ namespace AgendasContatos.Infra.Migrations
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("Descricao");
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
@@ -53,36 +54,48 @@ namespace AgendasContatos.Infra.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("CategoriaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Celular")
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
                         .HasColumnType("varchar(20)");
 
                     b.Property<DateTime>("DataCadastro")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .HasMaxLength(60)
+                        .IsUnicode(false)
                         .HasColumnType("varchar(60)");
 
                     b.Property<string>("Endereco")
                         .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
                         .HasColumnType("varchar(50)");
-
-                    b.Property<int?>("IdCategoria")
-                        .HasColumnType("int");
 
                     b.Property<string>("Nome")
                         .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("NumeroCasa")
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
                         .HasColumnType("varchar(20)");
 
                     b.Property<string>("Telefone")
                         .IsRequired()
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
                         .HasColumnType("varchar(20)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdCategoria");
+                    b.HasIndex("CategoriaId");
 
                     b.ToTable("Contatos", (string)null);
                 });
@@ -91,7 +104,7 @@ namespace AgendasContatos.Infra.Migrations
                 {
                     b.HasOne("AgendaContatos.Infra.Models.Categoria", "Categoria")
                         .WithMany("Contatos")
-                        .HasForeignKey("IdCategoria");
+                        .HasForeignKey("CategoriaId");
 
                     b.Navigation("Categoria");
                 });

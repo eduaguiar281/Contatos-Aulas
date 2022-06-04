@@ -1,4 +1,6 @@
-﻿namespace AgendaContatos.Infra.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AgendaContatos.Infra.Models
 {
     public class Contato
     {
@@ -11,8 +13,8 @@
         public string? Email { get; set; }
         public DateTime DataCadastro { get; set; }
         public bool Ativo { get; set; }
-        public int? IdCategoria { get; set; }
-        public string? DescricaoCategoria { get; set; }
-        public Categoria? Categoria { get; set; }
+        //public int? IdCategoria { get; set; }
+        public string? DescricaoCategoria { get { return Categoria?.Descricao; } }
+        public virtual Categoria? Categoria { get; set; }
     }
 }
