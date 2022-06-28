@@ -1,6 +1,7 @@
 ﻿using AgendaContatos.Core;
 using AgendaContatos.Core.Infraestrutura;
 using AgendaContatos.Infra.Models;
+using AgendasContatos.Infra.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows.Forms;
@@ -10,7 +11,8 @@ namespace AgendaContatos.Contatos
     public partial class FrmContatoManutencao : Form
     {
 
-        private readonly IContatosDatabase _contatosDatabase;
+        private readonly IRepository<Contato, int> _contatosRepository;
+        private readonly IRepository<Categoria, int> _categoriaRepository;
 
         public readonly OperacaoCadastro _operacaoCadastro;
         protected Contato Contato { get; set; }
@@ -18,16 +20,17 @@ namespace AgendaContatos.Contatos
         public FrmContatoManutencao(OperacaoCadastro operacaoCadastro, Contato contato)
         {
             InitializeComponent();
-            _contatosDatabase = Program.ServiceProvider.GetService<IContatosDatabase>();
+            _contatosRepository = Program.ServiceProvider.GetService<IRepository<Contato, int>>();
+            _categoriaRepository = Program.ServiceProvider.GetService<IRepository<Categoria, int>>();
             _operacaoCadastro = operacaoCadastro;
             Contato = contato;
             contatoBindingSource.DataSource = Contato;
             InicializarDados();
         }
 
-        private void InicializarDados()
+        private async void InicializarDados()
         {
-            categoriaBindingSource.DataSource = _contatosDatabase.ObterLista();
+            categoriaBindingSource.DataSource = await _categoriaRepository.ObterTodosAsync();
             switch (_operacaoCadastro)
             {
                 case OperacaoCadastro.Incluir:
@@ -70,13 +73,13 @@ namespace AgendaContatos.Contatos
             switch (_operacaoCadastro)
             {
                 case OperacaoCadastro.Incluir:
-                    await _contatosDatabase.InsertContato(Contato);
+                    await _contatosRepository.InsertAsync(Contato);
                     break;
                 case OperacaoCadastro.Alterar:
-                    await _contatosDatabase.UpdateContato(Contato);
+                    await _contatosRepository.UpdateAsync(Contato);
                     break;
                 case OperacaoCadastro.Excluir:
-                    await _contatosDatabase.DeleteContato(Contato.Id);
+                    await _contatosRepository.DeleteAsync(Contato);
                     break;
             }
             Close();

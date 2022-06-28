@@ -58,6 +58,7 @@ namespace AgendaContatos
             Services.AddSingleton(new ContatosDbContext(optionsBuilder.Options));
 
             Services.AddScoped<IRepository<Categoria, int>, CategoriaRepository>();
+            Services.AddScoped<IRepository<Contato, int>, ContatoRepository>();
             ServiceProvider = Services.BuildServiceProvider();
         }
     }

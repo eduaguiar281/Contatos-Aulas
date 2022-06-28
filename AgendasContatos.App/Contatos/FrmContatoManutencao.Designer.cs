@@ -49,9 +49,9 @@
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.categoriaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label8 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.contatoBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.categoriaBindingSource)).BeginInit();
@@ -234,18 +234,6 @@
             this.checkBox1.Text = "Ativo";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
-            // 
-            this.comboBox1.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.contatoBindingSource, "IdCategoria", true));
-            this.comboBox1.DataSource = this.categoriaBindingSource;
-            this.comboBox1.DisplayMember = "Descricao";
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(18, 332);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(248, 23);
-            this.comboBox1.TabIndex = 21;
-            this.comboBox1.ValueMember = "Id";
-            // 
             // categoriaBindingSource
             // 
             this.categoriaBindingSource.DataSource = typeof(AgendaContatos.Infra.Models.Categoria);
@@ -259,13 +247,24 @@
             this.label8.TabIndex = 22;
             this.label8.Text = "Categoria";
             // 
+            // comboBox1
+            // 
+            this.comboBox1.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.contatoBindingSource, "Categoria", true));
+            this.comboBox1.DataSource = this.categoriaBindingSource;
+            this.comboBox1.DisplayMember = "Descricao";
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(18, 333);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(224, 23);
+            this.comboBox1.TabIndex = 23;
+            // 
             // FrmContatoManutencao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(747, 450);
-            this.Controls.Add(this.label8);
             this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.label7);
@@ -314,9 +313,9 @@
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.BindingSource contatoBindingSource;
         private System.Windows.Forms.BindingSource categoriaBindingSource;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

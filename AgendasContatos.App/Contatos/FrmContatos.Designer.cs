@@ -164,6 +164,7 @@
             this.dgvContatos.RowTemplate.Height = 25;
             this.dgvContatos.Size = new System.Drawing.Size(1186, 559);
             this.dgvContatos.TabIndex = 3;
+            this.dgvContatos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvContatos_CellContentClick);
             // 
             // dataGridViewTextBoxColumn1
             // 

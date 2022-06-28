@@ -1,6 +1,7 @@
 ﻿using AgendaContatos.Core;
 using AgendaContatos.Core.Infraestrutura;
 using AgendaContatos.Infra.Models;
+using AgendasContatos.Infra.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -9,12 +10,12 @@ namespace AgendaContatos.Contatos
 {
     public partial class FrmContatos : Form
     {
-        private readonly IContatosDatabase _contatosDatabase;
+        private readonly IRepository<Contato, int> _contatosRepository;
 
         public FrmContatos()
         {
             InitializeComponent();
-            _contatosDatabase = Program.ServiceProvider.GetService<IContatosDatabase>();
+            _contatosRepository = Program.ServiceProvider.GetService<IRepository<Contato, int>>();
         }
 
         private void FrmContatos_FormClosed(object sender, FormClosedEventArgs e)
@@ -31,13 +32,13 @@ namespace AgendaContatos.Contatos
         }
 
 
-        private void btnOk_Click(object sender, System.EventArgs e)
+        private async void btnOk_Click(object sender, System.EventArgs e)
         {
-            List<Contato> contatos;
+            IEnumerable<Contato> contatos;
             if (txtFiltro.Text == string.Empty)
-                contatos = _contatosDatabase.ObterLista();
+                contatos = await _contatosRepository.ObterTodosAsync();
             else
-                contatos = _contatosDatabase.ObterLista(txtFiltro.Text);
+                contatos = await _contatosRepository.ObterAsync(txtFiltro.Text);
             dgvContatos.DataSource = contatos;
         }
 
@@ -86,6 +87,11 @@ namespace AgendaContatos.Contatos
             FrmContatoManutencao manutencao = new(OperacaoCadastro.Consulta, contato);
             manutencao.ShowDialog();
             btnOk_Click(this, e);
+        }
+
+        private void dgvContatos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
